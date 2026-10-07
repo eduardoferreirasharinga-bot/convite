@@ -598,8 +598,9 @@
     };
 
 
-    /* ===== LISTA DOS 33 PRESENTES ===== */
+   
 
+    /* ===== LISTA DOS PRESENTES ATUALIZADA ===== */
     const listaPresentes = [
         { id: "1",  nome: "Mesa + cadeiras", categoria: "Cozinha" },
         { id: "2",  nome: "Jogo de pratos", categoria: "Cozinha" },
@@ -622,7 +623,7 @@
         { id: "19", nome: "Porta-frios", categoria: "Cozinha" },
         { id: "20", nome: "Forma de gelo", categoria: "Cozinha" },
         { id: "21", nome: "Micro-ondas", categoria: "Cozinha" },
-                { id: "24", nome: "Cesto de roupa", categoria: "Lavanderia" },
+        { id: "24", nome: "Cesto de roupa", categoria: "Lavanderia" },
         { id: "25", nome: "Tábua de passar", categoria: "Lavanderia" },
         { id: "26", nome: "Balde", categoria: "Lavanderia" },
         { id: "27", nome: "Pano de chão", categoria: "Lavanderia" },
@@ -631,7 +632,16 @@
         { id: "30", nome: "Varal de chão", categoria: "Lavanderia" },
         { id: "31", nome: "PlayStation 5", categoria: "Mimos" },
         { id: "32", nome: "Contribuição para a viagem ao Rio de Janeiro — R$ 500,00", categoria: "Mimos" },
-        { id: "33", nome: "R$ 100,00 para o psicólogo para aguentar o Dhouglas 😂", categoria: "Mimos" }
+        { id: "33", nome: "R$ 100,00 para o psicólogo para aguentar o Dhouglas 😂", categoria: "Mimos" },
+        // NOVOS ITENS ADICIONADOS:
+        { id: "34", nome: "Tábua de corte", categoria: "Cozinha" },
+        { id: "35", nome: "Pote de vidro", categoria: "Cozinha" },
+        { id: "36", nome: "Pano de prato", categoria: "Cozinha" },
+        { id: "37", nome: "Tapete", categoria: "Mimos" },
+        { id: "38", nome: "Airfryer", categoria: "Cozinha" },
+        { id: "39", nome: "Aspirador de pó", categoria: "Mimos" },
+        { id: "40", nome: "Boleira", categoria: "Cozinha" },
+        { id: "41", nome: "Jogo de Xícaras", categoria: "Cozinha" }
     ];
 
 
@@ -663,16 +673,16 @@
 
     /* ===== CRIAR / SINCRONIZAR OS 33 PRESENTES ===== */
 
+    /* ===== CRIAR / SINCRONIZAR / LIMPAR PRESENTES ===== */
     async function sincronizarPresentesComFirebase() {
         try {
             console.log("🔄 Sincronizando presentes com o Firestore...");
 
             const batch = writeBatch(db);
 
+            // 1. Atualiza/Adiciona todos os presentes da lista (incluindo os novos)
             listaPresentes.forEach((presente) => {
                 const presenteRef = doc(db, "presentes", presente.id);
-
-                // merge:true atualiza nome/categoria, mas mantém reservado e por.
                 batch.set(
                     presenteRef,
                     { nome: presente.nome, categoria: presente.categoria },
@@ -680,15 +690,20 @@
                 );
             });
 
-            await batch.commit();
+            // 2. Garante a remoção do Fogão (ID 22) e Geladeira (ID 23)
+            const idsParaRemover = ["22", "23"];
+            idsParaRemover.forEach((id) => {
+                const presenteRef = doc(db, "presentes", id);
+                batch.delete(presenteRef);
+            });
 
-            console.log("✅ 33 presentes sincronizados com sucesso!");
+            await batch.commit();
+            console.log("✅ Banco de dados atualizado com os novos presentes!");
         } catch (erro) {
             console.error("❌ Erro ao sincronizar presentes:", erro);
             throw erro;
         }
     }
-
 
     /* ===== CARREGAR PRESENTES DO FIRESTORE ===== */
 
