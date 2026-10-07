@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6b4f3a">
+    <title>Chá de Casa Nova - Convite Interativo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f7f5f0;
+            --card-bg: #ffffff;
+            --primary: #2d4a3e;
+            --primary-dark: #1e332a;
+            --primary-light: #eaf1ed;
+            --accent: #c68b59;
+            --accent-hover: #b07545;
+            --text-dark: #222222;
+            --text-muted: #666666;
+            --border-color: #e5e0d8;
+            --radius: 16px;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            padding: 24px 12px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        button, input, select { font-family: inherit; }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, #8a6a50 0%, #6b4f3a 100%);
+            color: #ffffff;
+            border-radius: var(--radius);
+            padding: 36px 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: "🏠";
+            font-size: 5rem;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .hero-card h1 {
+            position: relative;
+            z-index: 1;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-card p.hosts {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            color: #f3e6d6;
+            font-weight: 500;
+        }
+
+        .hero-card p.quote {
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+            font-size: 0.95rem;
+            margin-top: 14px;
+            color: #f5ebe0;
+            opacity: 0.9;
+        }
+
+        .countdown-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .count-box {
+            background: rgba(255, 255, 255, 0.16);
+            padding: 10px 4px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+        }
+
+        .count-box span {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .count-box label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #f5ebe0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 26px 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 12px;
+        }
+
+        .card-header i { font-size: 1.3rem; color: var(--accent); }
+
+        .card-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: var(--bg-color);
+            padding: 12px 16px;
+            border-radius: 10px;
+        }
+
+        .info-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-top: 3px;
+            min-width: 18px;
+        }
+
+        .info-item div { min-width: 0; }
+
+        .info-item div strong {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .info-item div span {
+            display: block;
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            word-break: break-word;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover { background-color: var(--primary-dark); transform: translateY(-1px); }
+        .btn:active { transform: translateY(0); }
+        .btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+        .btn-accent { background-color: var(--accent); }
+        .btn-accent:hover { background-color: var(--accent-hover); }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover { background-color: var(--primary-light); }
+
+        form { display: flex; flex-direction: column; gap: 16px; }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #fafafa;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            background-color: #ffffff;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .gift-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .gift-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 14px;
+            background: var(--bg-color);
+            border-radius: 10px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .gift-item.reserved { background: #f0f0f0; opacity: 0.7; }
+
+        .gift-details {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            min-width: 0;
+        }
+
+        .gift-title { font-weight: 600; font-size: 0.92rem; word-break: break-word; }
+        .gift-category { font-size: 0.75rem; color: var(--text-muted); }
+        .gift-reserver { font-size: 0.75rem; color: var(--accent); font-weight: 600; margin-top: 2px; }
+
+        .btn-select-gift {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            background-color: var(--accent);
+            color: white;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .btn-select-gift:hover { background-color: var(--accent-hover); }
+        .btn-select-gift.reserved { background-color: #8c8c8c; cursor: default; }
+
+        .pix-box {
+            background: var(--primary-light);
+            border: 1px dashed var(--primary);
+            padding: 16px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pix-title { font-weight: 600; font-size: 0.9rem; color: var(--primary); }
+
+        .pix-key {
+            font-family: monospace;
+            font-weight: bold;
+            background: #ffffff;
+            padding: 8px;
+            border-radius: 6px;
+            margin: 8px 0;
+            font-size: 0.9rem;
+            word-break: break-all;
+            border: 1px solid var(--border-color);
+        }
+
+        .pix-button { padding: 8px; font-size: 0.85rem; }
+
+        .firebase-status {
+            text-align: center;
+            font-size: 0.78rem;
+            margin-top: 12px;
+            color: var(--text-muted);
+        }
+
+        .firebase-error {
+            text-align: center;
+            padding: 18px 10px;
+            color: #a94442;
+            font-size: 0.9rem;
+            background: #fff5f5;
+            border-radius: 10px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-body {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .modal-body h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 10px; }
+        .modal-description { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px; }
+        .modal-actions { display: flex; gap: 10px; }
+
+        @media (max-width: 420px) {
+            body { padding: 12px 8px; }
+            .hero-card { padding: 30px 18px; }
+            .hero-card h1 { font-size: 1.9rem; }
+            .card { padding: 22px 16px; }
+            .gift-item { align-items: flex-start; }
+            .btn-select-gift { padding: 7px 10px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="hero-card">
+        <h1>Chá de Casa Nova</h1>
+        <p class="hosts">Beatriz &amp; Dhouglas</p>
+        <p class="quote">"Construindo nosso cantinho com muito carinho e a presença de quem amamos."</p>
+
+        <div class="countdown-grid">
+            <div class="count-box"><span id="timer-days">00</span><label>Dias</label></div>
+            <div class="count-box"><span id="timer-hours">00</span><label>Horas</label></div>
+            <div class="count-box"><span id="timer-mins">00</span><label>Min</label></div>
+            <div class="count-box"><span id="timer-secs">00</span><label>Seg</label></div>
+        </div>
+    </header>
+
+    <section class="card">
+        <div class="card-header">
+            <i class="fa-solid fa-location-dot"></i>
+            <h2>Data &amp; Localização</h2>
+        </div>
+
+        <div class="info-list">
+            <div class="info-item">
+                <i class="fa-regular fa-calendar"></i>
+                <div>
+                    <strong>Data</strong>
+                    <span>Sábado, 24 de Outubro de 2026</span>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <i class="fa-regular fa-clock"></i>
+                <div>
+                    <strong>Horário</strong>
+                    <span>A partir das 13:00h</span>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <i class="fa-solid fa-house"></i>
+                <div>
+                    <strong>Endereço</strong>
+                    <span>Chacara Diamante, 1830 - Bairro Jardim São Paulo, Rio Claro - SP</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-outline" type="button" id="btnMapa">
+            <i class="fa-solid fa-map-location-dot"></i>
+            Abrir no Google Maps
+        </button>
+    </section>
+
+    <section class="card">
+        <div class="card-header">
+            <i class="fa-solid fa-envelope-open-text"></i>
+            <h2>Confirmar Presença</h2>
+        </div>
+
+        <form id="rsvpForm">
+            <div class="form-group">
+                <label for="nome">Seu Nome Completo:</label>
+                <input type="text" id="nome" required maxlength="100" autocomplete="name" placeholder="Ex: Maria Silva">
+            </div>
+
+            <div class="form-group">
+                <label for="status">Você vai comparecer?</label>
+                <select id="status">
+                    <option value="sim">Sim, estarei lá com certeza! 🎉</option>
+                    <option value="nao">Infelizmente não poderei ir 😔</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="groupAcompanhantes">
+                <label for="acompanhantes">Nº de Acompanhantes (fora você):</label>
+                <input type="number" id="acompanhantes" min="0" max="10" value="0">
+            </div>
+
+            <button type="submit" class="btn btn-accent">
+                <i class="fa-brands fa-whatsapp"></i>
+                Confirmar no WhatsApp
+            </button>
+        </form>
+    </section>
+
+    <section class="card">
+        <div class="card-header">
+            <i class="fa-solid fa-gift"></i>
+            <h2>Lista de Presentes</h2>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="tab-btn active" type="button" data-categoria="todos">Todos</button>
+            <button class="tab-btn" type="button" data-categoria="Cozinha">Cozinha</button>
+            <button class="tab-btn" type="button" data-categoria="Lavanderia">Lavanderia</button>
+            <button class="tab-btn" type="button" data-categoria="Mimos">Mimos</button>
+        </div>
+
+        <ul class="gift-list" id="giftList">
+            <li style="text-align:center; padding:15px; color:#888;">Carregando presentes...</li>
+        </ul>
+
+        <div class="firebase-status" id="firebaseStatus">Conectando à lista de presentes...</div>
+
+        <div class="pix-box">
+            <p class="pix-title">Prefere ajudar com um mimo via PIX?</p>
+            <div class="pix-key" id="chavePixText">19997633570</div>
+            <button class="btn btn-outline pix-button" type="button" id="btnCopiarPix">
+                <i class="fa-regular fa-copy"></i>
+                Copiar Chave PIX
+            </button>
+        </div>
+    </section>
+
+</div>
+
+<div class="modal-overlay" id="giftModal" role="dialog" aria-modal="true" aria-labelledby="modalGiftTitle">
+    <div class="modal-body">
+        <h3 id="modalGiftTitle">Reservar Presente</h3>
+        <p class="modal-description">Por favor, informe seu nome para reservarmos este item na lista:</p>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+            <input type="text" id="reserverNameInput" placeholder="Seu nome completo" autocomplete="name" maxlength="100">
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn btn-outline" type="button" id="btnCancelarModal">Cancelar</button>
+            <button class="btn btn-accent" type="button" id="btnConfirmarReserva">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+
+    /* ===== IMPORTAÇÕES DO FIREBASE ===== */
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+    import {
+        getFirestore,
+        collection,
+        onSnapshot,
+        doc,
+        runTransaction,
+        addDoc,
+        serverTimestamp,
+        writeBatch
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    /* ===== CONFIGURAÇÃO FIREBASE ===== */
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCf1IWJD7p92aYPvcQuws3xb0iyOBRE3Wc",
+        authDomain: "convite-89fac.firebaseapp.com",
+        projectId: "convite-89fac",
+        storageBucket: "convite-89fac.firebasestorage.app",
+        messagingSenderId: "111031563804",
+        appId: "1:111031563804:web:9c2379bde0ae5ca06a51d9",
+        measurementId: "G-TL063XRHCQ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const presentesRef = collection(db, "presentes");
+
+
+    /* ===== CONFIGURAÇÕES DO CONVITE ===== */
+
+    const CONFIG = {
+        telefoneWhatsApp: "5519971596789",
+        linkGoogleMaps: "https://www.google.com/maps/dir//Ch%C3%A1cara+Diamante+Rio+Claro,+R.+22,+1830+-+Jardim+Sao+Paulo,+Rio+Claro+-+SP,+13503-007/@-22.4231424,-47.5922432,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x94c7db111f172bab:0xea52a1402041db28!2m2!1d-47.5778484!2d-22.4083841?entry=ttu",
+        chavePix: "19997633570",
+        dataEvento: "2026-10-24T13:00:00-03:00"
+    };
+
+
+    /* ===== LISTA DOS 33 PRESENTES ===== */
+
+    const listaPresentes = [
+        { id: "1",  nome: "Mesa + cadeiras", categoria: "Cozinha" },
+        { id: "2",  nome: "Jogo de pratos", categoria: "Cozinha" },
+        { id: "3",  nome: "Jogo de talheres", categoria: "Cozinha" },
+        { id: "4",  nome: "Jogo de xícaras", categoria: "Cozinha" },
+        { id: "5",  nome: "Jogo de copos", categoria: "Cozinha" },
+        { id: "6",  nome: "Colher de cozinhar", categoria: "Cozinha" },
+        { id: "7",  nome: "Potes de mantimentos", categoria: "Cozinha" },
+        { id: "8",  nome: "Lixeira", categoria: "Cozinha" },
+        { id: "9",  nome: "Tábua de carne", categoria: "Cozinha" },
+        { id: "10", nome: "Escorredor de louça", categoria: "Cozinha" },
+        { id: "11", nome: "Forma de bolo", categoria: "Cozinha" },
+        { id: "12", nome: "Panelas", categoria: "Cozinha" },
+        { id: "13", nome: "Peneira", categoria: "Cozinha" },
+        { id: "14", nome: "Jarra", categoria: "Cozinha" },
+        { id: "15", nome: "Liquidificador", categoria: "Cozinha" },
+        { id: "16", nome: "Toalha de mesa", categoria: "Cozinha" },
+        { id: "17", nome: "Manteigueira", categoria: "Cozinha" },
+        { id: "18", nome: "Chaleira + boleira", categoria: "Cozinha" },
+        { id: "19", nome: "Porta-frios", categoria: "Cozinha" },
+        { id: "20", nome: "Forma de gelo", categoria: "Cozinha" },
+        { id: "21", nome: "Micro-ondas", categoria: "Cozinha" },
+                { id: "24", nome: "Cesto de roupa", categoria: "Lavanderia" },
+        { id: "25", nome: "Tábua de passar", categoria: "Lavanderia" },
+        { id: "26", nome: "Balde", categoria: "Lavanderia" },
+        { id: "27", nome: "Pano de chão", categoria: "Lavanderia" },
+        { id: "28", nome: "Rodo", categoria: "Lavanderia" },
+        { id: "29", nome: "Vassoura", categoria: "Lavanderia" },
+        { id: "30", nome: "Varal de chão", categoria: "Lavanderia" },
+        { id: "31", nome: "PlayStation 5", categoria: "Mimos" },
+        { id: "32", nome: "Contribuição para a viagem ao Rio de Janeiro — R$ 500,00", categoria: "Mimos" },
+        { id: "33", nome: "R$ 100,00 para o psicólogo para aguentar o Dhouglas 😂", categoria: "Mimos" }
+    ];
+
+
+    /* ===== ESTADO ===== */
+
+    let presentes = [];
+    let categoriaAtual = "todos";
+    let presenteSelecionadoId = null;
+    let timerInterval = null;
+
+
+    /* ===== ELEMENTOS ===== */
+
+    const giftList = document.getElementById("giftList");
+    const firebaseStatus = document.getElementById("firebaseStatus");
+
+
+    /* ===== ESCAPAR HTML ===== */
+
+    function escaparHTML(texto) {
+        return String(texto ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    /* ===== CRIAR / SINCRONIZAR OS 33 PRESENTES ===== */
+
+    async function sincronizarPresentesComFirebase() {
+        try {
+            console.log("🔄 Sincronizando presentes com o Firestore...");
+
+            const batch = writeBatch(db);
+
+            listaPresentes.forEach((presente) => {
+                const presenteRef = doc(db, "presentes", presente.id);
+
+                // merge:true atualiza nome/categoria, mas mantém reservado e por.
+                batch.set(
+                    presenteRef,
+                    { nome: presente.nome, categoria: presente.categoria },
+                    { merge: true }
+                );
+            });
+
+            await batch.commit();
+
+            console.log("✅ 33 presentes sincronizados com sucesso!");
+        } catch (erro) {
+            console.error("❌ Erro ao sincronizar presentes:", erro);
+            throw erro;
+        }
+    }
+
+
+    /* ===== CARREGAR PRESENTES DO FIRESTORE ===== */
+
+    function carregarPresentesFirebase() {
+        onSnapshot(
+            presentesRef,
+
+            (snapshot) => {
+                presentes = [];
+
+                snapshot.forEach((documento) => {
+                    const dados = documento.data();
+
+                    presentes.push({
+                        id: documento.id,
+                        nome: dados.nome || "Presente",
+                        categoria: dados.categoria || "Outros",
+                        reservado: dados.reservado === true,
+                        por: dados.por || dados.reservadopor || ""
+                    });
+                });
+
+                presentes.sort((a, b) => {
+                    const numeroA = Number(a.id);
+                    const numeroB = Number(b.id);
+
+                    if (!Number.isNaN(numeroA) && !Number.isNaN(numeroB)) {
+                        return numeroA - numeroB;
+                    }
+
+                    return a.nome.localeCompare(b.nome, "pt-BR");
+                });
+
+                console.log("🎁 Presentes recebidos do Firebase:", presentes);
+
+                if (firebaseStatus) {
+                    const disponiveis = presentes.filter(item => !item.reservado).length;
+
+                    firebaseStatus.textContent =
+                        `${presentes.length} presente(s) na lista • ${disponiveis} disponível(is).`;
+
+                    firebaseStatus.style.color = "var(--primary)";
+                }
+
+                renderizarPresentes();
+            },
+
+            (erro) => {
+                console.error("Erro ao conectar ao Firestore:", erro);
+
+                if (firebaseStatus) {
+                    firebaseStatus.textContent = "Erro ao conectar ao Firebase.";
+                    firebaseStatus.style.color = "#a94442";
+                }
+
+                if (giftList) {
+                    giftList.innerHTML = `
+                        <li class="firebase-error">
+                            <strong>Erro ao carregar os presentes.</strong>
+                            <br><br>
+                            ${escaparHTML(erro.message || "Verifique as regras do Firestore.")}
+                        </li>
+                    `;
+                }
+            }
+        );
+    }
+
+
+    /* ===== RENDERIZAR PRESENTES ===== */
+
+    function renderizarPresentes() {
+        if (!giftList) return;
+
+        giftList.innerHTML = "";
+
+        const itensFiltrados =
+            categoriaAtual === "todos"
+                ? presentes
+                : presentes.filter(item => item.categoria === categoriaAtual);
+
+        if (itensFiltrados.length === 0) {
+            giftList.innerHTML = `
+                <li style="text-align:center; padding:15px; color:#888;">
+                    Nenhum presente nesta categoria.
+                </li>
+            `;
+            return;
+        }
+
+        itensFiltrados.forEach((item) => {
+            const li = document.createElement("li");
+
+            li.className = "gift-item" + (item.reservado ? " reserved" : "");
+
+            const nome = escaparHTML(item.nome);
+            const categoria = escaparHTML(item.categoria);
+            const reservadoPor = escaparHTML(item.por);
+
+            li.innerHTML = `
+                <div class="gift-details">
+                    <span class="gift-title">${nome}</span>
+                    <span class="gift-category">${categoria}</span>
+                    ${
+                        item.reservado
+                            ? `<span class="gift-reserver">
+                                   <i class="fa-solid fa-check"></i>
+                                   Reservado por ${reservadoPor || "outra pessoa"}
+                               </span>`
+                            : ""
+                    }
+                </div>
+
+                <button
+                    class="btn-select-gift ${item.reservado ? "reserved" : ""}"
+                    type="button"
+                    data-id="${escaparHTML(item.id)}"
+                    ${item.reservado ? "disabled" : ""}
+                >
+                    ${item.reservado ? "Reservado" : "Escolher"}
+                </button>
+            `;
+
+            giftList.appendChild(li);
+        });
+    }
+
+
+    /* ===== FILTROS ===== */
+
+    function filtrarPresentes(categoria, botao) {
+        categoriaAtual = categoria;
+
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+            btn.classList.remove("active");
+        });
+
+        if (botao) botao.classList.add("active");
+
+        renderizarPresentes();
+    }
+
+
+    /* ===== ABRIR MODAL ===== */
+
+    function abrirModalPresente(id) {
+        const item = presentes.find(presente => presente.id === id);
+
+        if (!item) {
+            alert("Presente não encontrado.");
+            return;
+        }
+
+        if (item.reservado) {
+            alert(`Este presente já foi reservado por ${item.por || "outra pessoa"}.`);
+            return;
+        }
+
+        presenteSelecionadoId = id;
+
+        const titulo = document.getElementById("modalGiftTitle");
+        const input = document.getElementById("reserverNameInput");
+        const modal = document.getElementById("giftModal");
+
+        if (!titulo || !input || !modal) return;
+
+        titulo.textContent = `Reservar: ${item.nome}`;
+        input.value = "";
+        modal.classList.add("active");
+
+        setTimeout(() => input.focus(), 100);
+    }
+
+
+    /* ===== CONFIRMAR RESERVA ===== */
+
+    async function confirmarReserva() {
+        const input = document.getElementById("reserverNameInput");
+
+        if (!input) return;
+
+        const nome = input.value.trim();
+
+        if (!nome) {
+            alert("Por favor, informe seu nome!");
+            input.focus();
+            return;
+        }
+
+        if (nome.length > 100) {
+            alert("O nome é muito longo.");
+            return;
+        }
+
+        if (presenteSelecionadoId === null) return;
+
+        const id = presenteSelecionadoId;
+        const item = presentes.find(presente => presente.id === id);
+
+        if (!item) {
+            fecharModal();
+            alert("Esse presente não foi encontrado.");
+            return;
+        }
+
+        const botao = document.getElementById("btnConfirmarReserva");
+
+        if (botao) {
+            botao.disabled = true;
+            botao.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
+        }
+
+        try {
+            const presenteRef = doc(db, "presentes", id);
+
+            await runTransaction(db, async (transaction) => {
+                const snapshot = await transaction.get(presenteRef);
+
+                if (!snapshot.exists()) {
+                    throw new Error("PRESENTE_NAO_ENCONTRADO");
+                }
+
+                const dados = snapshot.data();
+
+                if (dados.reservado === true) {
+                    throw new Error("PRESENTE_JA_RESERVADO");
+                }
+
+                transaction.update(presenteRef, { reservado: true, por: nome });
+            });
+
+            fecharModal();
+            alert("🎁 Presente reservado com sucesso!");
+
+        } catch (erro) {
+            console.error("Erro ao reservar presente:", erro);
+
+            if (erro.message === "PRESENTE_JA_RESERVADO") {
+                alert("Esse presente acabou de ser reservado por outra pessoa.");
+            } else if (erro.message === "PRESENTE_NAO_ENCONTRADO") {
+                alert("Esse presente não existe mais no Firebase.");
+            } else {
+                alert(
+                    "Não foi possível reservar o presente.\n\n" +
+                    "Erro: " + (erro.message || "Erro desconhecido.")
+                );
+            }
+
+        } finally {
+            if (botao) {
+                botao.disabled = false;
+                botao.innerHTML = "Confirmar";
+            }
+        }
+    }
+
+
+    /* ===== FECHAR MODAL ===== */
+
+    function fecharModal() {
+        const modal = document.getElementById("giftModal");
+
+        if (modal) modal.classList.remove("active");
+
+        presenteSelecionadoId = null;
+    }
+
+
+    /* ===== CONTADOR ===== */
+
+    function iniciarTimer() {
+        const dataAlvo = new Date(CONFIG.dataEvento).getTime();
+
+        if (Number.isNaN(dataAlvo)) {
+            console.error("Data do evento inválida.");
+            return;
+        }
+
+        function atualizar() {
+            const diferenca = dataAlvo - Date.now();
+
+            const diasEl = document.getElementById("timer-days");
+            const horasEl = document.getElementById("timer-hours");
+            const minutosEl = document.getElementById("timer-mins");
+            const segundosEl = document.getElementById("timer-secs");
+
+            if (!diasEl || !horasEl || !minutosEl || !segundosEl) return;
+
+            if (diferenca <= 0) {
+                diasEl.textContent = "00";
+                horasEl.textContent = "00";
+                minutosEl.textContent = "00";
+                segundosEl.textContent = "00";
+
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+
+                return;
+            }
+
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+            diasEl.textContent = String(dias).padStart(2, "0");
+            horasEl.textContent = String(horas).padStart(2, "0");
+            minutosEl.textContent = String(minutos).padStart(2, "0");
+            segundosEl.textContent = String(segundos).padStart(2, "0");
+        }
+
+        atualizar();
+
+        timerInterval = setInterval(atualizar, 1000);
+    }
+
+
+    /* ===== ACOMPANHANTES ===== */
+
+    function toggleAcompanhantes(valor) {
+        const grupo = document.getElementById("groupAcompanhantes");
+
+        if (!grupo) return;
+
+        grupo.style.display = valor === "sim" ? "flex" : "none";
+    }
+
+
+    /* ===== CONFIRMAÇÃO + WHATSAPP ===== */
+
+    async function enviarConfirmacaoWhatsApp(evento) {
+        evento.preventDefault();
+
+        const nomeElement = document.getElementById("nome");
+        const statusElement = document.getElementById("status");
+        const acompanhantesElement = document.getElementById("acompanhantes");
+
+        if (!nomeElement || !statusElement || !acompanhantesElement) return;
+
+        const nome = nomeElement.value.trim();
+        const status = statusElement.value;
+
+        const acompanhantes =
+            status === "sim" ? Number(acompanhantesElement.value || 0) : 0;
+
+        if (!nome) {
+            alert("Por favor, informe seu nome.");
+            return;
+        }
+
+        if (nome.length > 100) {
+            alert("O nome é muito longo.");
+            return;
+        }
+
+        if (!Number.isInteger(acompanhantes) || acompanhantes < 0 || acompanhantes > 10) {
+            alert("Número de acompanhantes inválido.");
+            return;
+        }
+
+        const botao = document.querySelector('#rsvpForm button[type="submit"]');
+
+        if (botao) {
+            botao.disabled = true;
+            botao.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
+        }
+
+        try {
+            await addDoc(collection(db, "confirmacoes"), {
+                nome: nome,
+                status: status,
+                acompanhantes: acompanhantes,
+                criadoEm: serverTimestamp()
+            });
+
+            const statusTexto =
+                status === "sim"
+                    ? "✅ SIM, estarei lá!"
+                    : "❌ Infelizmente NÃO poderei ir.";
+
+            let mensagem = "*CONFIRMAÇÃO DE PRESENÇA - CHÁ DE CASA NOVA*\n\n";
+
+            mensagem += `👤 *Nome:* ${nome}\n`;
+            mensagem += `📌 *Presença:* ${statusTexto}\n`;
+
+            if (status === "sim") {
+                mensagem += `👥 *Acompanhantes:* ${acompanhantes}\n`;
+            }
+
+            const url =
+                `https://api.whatsapp.com/send?phone=${CONFIG.telefoneWhatsApp}&text=${encodeURIComponent(mensagem)}`;
+
+            alert("✅ Sua confirmação foi salva com sucesso!");
+
+            window.open(url, "_blank", "noopener,noreferrer");
+
+            const form = document.getElementById("rsvpForm");
+
+            if (form) form.reset();
+
+            toggleAcompanhantes("sim");
+
+        } catch (erro) {
+            console.error("Erro ao salvar confirmação no Firestore:", erro);
+
+            alert(
+                "❌ Não foi possível salvar sua confirmação.\n\n" +
+                "Erro: " + (erro.message || "Erro desconhecido.")
+            );
+
+        } finally {
+            if (botao) {
+                botao.disabled = false;
+                botao.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Confirmar no WhatsApp';
+            }
+        }
+    }
+
+
+    /* ===== GOOGLE MAPS ===== */
+
+    function abrirMapa() {
+        window.open(CONFIG.linkGoogleMaps, "_blank", "noopener,noreferrer");
+    }
+
+
+    /* ===== COPIAR PIX ===== */
+
+    async function copiarPix() {
+        const chave = CONFIG.chavePix;
+
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(chave);
+            } else {
+                const textarea = document.createElement("textarea");
+
+                textarea.value = chave;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+
+                document.body.appendChild(textarea);
+
+                textarea.focus();
+                textarea.select();
+
+                document.execCommand("copy");
+
+                textarea.remove();
+            }
+
+            alert("Chave PIX copiada com sucesso!");
+
+        } catch (erro) {
+            console.error("Erro ao copiar PIX:", erro);
+
+            alert(
+                "Não foi possível copiar automaticamente.\n\n" +
+                "Copie manualmente:\n" + chave
+            );
+        }
+    }
+
+
+    /* ===== CONFIGURAR EVENTOS ===== */
+
+    function configurarEventos() {
+        const rsvpForm = document.getElementById("rsvpForm");
+
+        if (rsvpForm) {
+            rsvpForm.addEventListener("submit", enviarConfirmacaoWhatsApp);
+        }
+
+        const status = document.getElementById("status");
+
+        if (status) {
+            status.addEventListener("change", function () {
+                toggleAcompanhantes(this.value);
+            });
+
+            toggleAcompanhantes(status.value);
+        }
+
+        const btnMapa = document.getElementById("btnMapa");
+
+        if (btnMapa) btnMapa.addEventListener("click", abrirMapa);
+
+        const btnPix = document.getElementById("btnCopiarPix");
+
+        if (btnPix) btnPix.addEventListener("click", copiarPix);
+
+        document.querySelectorAll(".tab-btn").forEach((botao) => {
+            botao.addEventListener("click", function () {
+                filtrarPresentes(this.dataset.categoria, this);
+            });
+        });
+
+        if (giftList) {
+            giftList.addEventListener("click", function (evento) {
+                const botao = evento.target.closest(".btn-select-gift");
+
+                if (!botao) return;
+
+                const id = botao.dataset.id;
+
+                if (!id) return;
+
+                abrirModalPresente(id);
+            });
+        }
+
+        const btnCancelar = document.getElementById("btnCancelarModal");
+
+        if (btnCancelar) btnCancelar.addEventListener("click", fecharModal);
+
+        const btnConfirmar = document.getElementById("btnConfirmarReserva");
+
+        if (btnConfirmar) btnConfirmar.addEventListener("click", confirmarReserva);
+
+        const modal = document.getElementById("giftModal");
+
+        if (modal) {
+            modal.addEventListener("click", function (evento) {
+                if (evento.target === modal) fecharModal();
+            });
+        }
+
+        const inputReserva = document.getElementById("reserverNameInput");
+
+        if (inputReserva) {
+            inputReserva.addEventListener("keydown", function (evento) {
+                if (evento.key === "Enter") {
+                    evento.preventDefault();
+                    confirmarReserva();
+                }
+
+                if (evento.key === "Escape") fecharModal();
+            });
+        }
+
+        document.addEventListener("keydown", function (evento) {
+            if (evento.key === "Escape") fecharModal();
+        });
+    }
+
+
+    /* ===== INICIALIZAÇÃO ===== */
+
+    document.addEventListener("DOMContentLoaded", async function () {
+        try {
+            const pixElement = document.getElementById("chavePixText");
+
+            if (pixElement) pixElement.textContent = CONFIG.chavePix;
+
+            configurarEventos();
+
+            iniciarTimer();
+
+            if (firebaseStatus) {
+                firebaseStatus.textContent = "Criando lista de presentes...";
+            }
+
+            await sincronizarPresentesComFirebase();
+
+            carregarPresentesFirebase();
+
+            console.log("✅ Convite inicializado.");
+            console.log("✅ Firebase conectado.");
+            console.log("✅ 33 presentes sincronizados.");
+
+        } catch (erro) {
+            console.error("❌ Erro durante a inicialização:", erro);
+
+            if (firebaseStatus) {
+                firebaseStatus.textContent =
+                    "Erro ao inicializar o sistema: " +
+                    (erro.message || "verifique o Firestore.");
+
+                firebaseStatus.style.color = "#a94442";
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>
