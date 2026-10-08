@@ -3,36 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#6b4f3a">
+    <meta name="theme-color" content="#7d5c43">
     <title>Chá de Casa Nova - Convite Interativo</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-color: #f7f5f0;
-            --card-bg: #ffffff;
-            --primary: #2d4a3e;
-            --primary-dark: #1e332a;
-            --primary-light: #eaf1ed;
-            --accent: #c68b59;
-            --accent-hover: #b07545;
-            --text-dark: #222222;
-            --text-muted: #666666;
-            --border-color: #e5e0d8;
-            --radius: 16px;
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            --bg-color: #f5ebe0;
+            --card-bg: #fcf9f5;
+            --primary: #7d5c43;
+            --primary-dark: #5c422f;
+            --primary-light: #f1e4d8;
+            --accent: #8c684d;
+            --accent-hover: #6e5039;
+            --text-dark: #3d2b1f;
+            --text-muted: #826e60;
+            --border-color: #e6d7c3;
+            --border-gold: #c8a37e;
+            --radius: 20px;
+            --shadow: 0 10px 30px rgba(125, 92, 67, 0.08);
+            --font-title: 'Cormorant Garamond', Georgia, serif;
+            --font-script: 'Alex Brush', 'Brush Script MT', cursive;
+            --font-body: 'Montserrat', sans-serif;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 0%, #fff9f2 0%, var(--bg-color) 100%);
             color: var(--text-dark);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: var(--font-body);
             padding: 24px 12px;
             line-height: 1.6;
             min-height: 100vh;
@@ -49,85 +54,81 @@
             gap: 24px;
         }
 
+        /* CARD HERO */
         .hero-card {
-            background: linear-gradient(135deg, #8a6a50 0%, #6b4f3a 100%);
-            color: #ffffff;
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold);
             border-radius: var(--radius);
-            padding: 36px 24px;
+            padding: 36px 20px 28px 20px;
             text-align: center;
             box-shadow: var(--shadow);
             position: relative;
-            overflow: hidden;
-        }
-
-        .hero-card::before {
-            content: "🏠";
-            font-size: 5rem;
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            opacity: 0.15;
-            pointer-events: none;
         }
 
         .hero-card h1 {
-            position: relative;
-            z-index: 1;
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
+            font-family: var(--font-title);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
         }
 
         .hero-card p.hosts {
-            position: relative;
-            z-index: 1;
-            font-size: 1.1rem;
-            color: #f3e6d6;
-            font-weight: 500;
+            font-family: var(--font-script);
+            font-size: 3.3rem;
+            color: var(--accent);
+            line-height: 1.1;
+            margin: 6px 0 12px 0;
         }
 
         .hero-card p.quote {
-            position: relative;
-            z-index: 1;
+            font-family: var(--font-title);
             font-style: italic;
-            font-size: 0.95rem;
-            margin-top: 14px;
-            color: #f5ebe0;
-            opacity: 0.9;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 90%;
+            margin: 0 auto;
         }
 
+        /* CONTAGEM REGRESSIVA */
         .countdown-grid {
-            position: relative;
-            z-index: 1;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
-            margin-top: 20px;
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--border-gold);
         }
 
         .count-box {
-            background: rgba(255, 255, 255, 0.16);
+            background: var(--primary-light);
             padding: 10px 4px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 12px;
+            border: 1px solid rgba(200, 163, 126, 0.4);
         }
 
         .count-box span {
             display: block;
-            font-size: 1.3rem;
+            font-family: var(--font-title);
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #ffffff;
+            color: var(--primary-dark);
+            line-height: 1;
         }
 
         .count-box label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #f5ebe0;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 4px;
+            display: block;
         }
 
+        /* CARDS */
         .card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -139,93 +140,106 @@
         .card-header {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 12px;
         }
 
-        .card-header i { font-size: 1.3rem; color: var(--accent); }
+        .card-header i { font-size: 1.2rem; color: var(--accent); }
 
         .card-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
+            font-family: var(--font-title);
+            font-size: 1.5rem;
             color: var(--primary);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .info-list {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
         .info-item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 12px;
-            background: var(--bg-color);
-            padding: 12px 16px;
-            border-radius: 10px;
+            background: #ffffff;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
 
         .info-item i {
-            color: var(--primary);
+            color: var(--accent);
             font-size: 1.1rem;
-            margin-top: 3px;
-            min-width: 18px;
+            min-width: 20px;
+            text-align: center;
         }
 
         .info-item div { min-width: 0; }
 
         .info-item div strong {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
             text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
 
         .info-item div span {
             display: block;
-            font-size: 0.98rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 500;
             color: var(--text-dark);
             word-break: break-word;
         }
 
+        /* BOTÕES */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             width: 100%;
-            padding: 14px;
+            padding: 14px 20px;
             background-color: var(--primary);
             color: #ffffff;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 600;
+            border: 1px solid var(--primary-dark);
+            border-radius: 30px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-decoration: none;
         }
 
-        .btn:hover { background-color: var(--primary-dark); transform: translateY(-1px); }
-        .btn:active { transform: translateY(0); }
-        .btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+        .btn:hover { background-color: var(--primary-dark); }
+        .btn:disabled { opacity: 0.65; cursor: not-allowed; }
 
-        .btn-accent { background-color: var(--accent); }
+        .btn-accent {
+            background-color: var(--accent);
+            border-color: var(--accent-hover);
+        }
         .btn-accent:hover { background-color: var(--accent-hover); }
 
         .btn-outline {
             background-color: transparent;
-            border: 2px solid var(--primary);
+            border: 1px solid var(--primary);
             color: var(--primary);
         }
 
-        .btn-outline:hover { background-color: var(--primary-light); }
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+        }
 
+        /* FORMULÁRIO */
         form { display: flex; flex-direction: column; gap: 16px; }
 
         .form-group {
@@ -236,29 +250,31 @@
         }
 
         .form-group label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
             padding: 12px 14px;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
-            background-color: #fafafa;
-            font-size: 0.95rem;
+            background-color: #ffffff;
+            font-size: 0.92rem;
+            color: var(--text-dark);
             outline: none;
-            transition: border-color 0.2s, background-color 0.2s;
         }
 
         .form-group input:focus,
         .form-group select:focus {
-            border-color: var(--primary);
-            background-color: #ffffff;
+            border-color: var(--accent);
         }
 
+        /* ABAS */
         .filter-tabs {
             display: flex;
             gap: 8px;
@@ -271,16 +287,15 @@
         .filter-tabs::-webkit-scrollbar { display: none; }
 
         .tab-btn {
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 20px;
             border: 1px solid var(--border-color);
-            background: var(--bg-color);
-            font-size: 0.82rem;
-            font-weight: 600;
+            background: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 500;
             color: var(--text-muted);
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s;
         }
 
         .tab-btn.active {
@@ -289,6 +304,7 @@
             border-color: var(--primary);
         }
 
+        /* PRESENTES */
         .gift-list {
             list-style: none;
             display: flex;
@@ -302,13 +318,12 @@
             justify-content: space-between;
             gap: 12px;
             padding: 12px 14px;
-            background: var(--bg-color);
-            border-radius: 10px;
-            border: 1px solid transparent;
-            transition: all 0.2s;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
 
-        .gift-item.reserved { background: #f0f0f0; opacity: 0.7; }
+        .gift-item.reserved { background: #f4efea; opacity: 0.75; }
 
         .gift-details {
             display: flex;
@@ -317,51 +332,52 @@
             min-width: 0;
         }
 
-        .gift-title { font-weight: 600; font-size: 0.92rem; word-break: break-word; }
-        .gift-category { font-size: 0.75rem; color: var(--text-muted); }
+        .gift-title { font-weight: 600; font-size: 0.9rem; color: var(--text-dark); word-break: break-word; }
+        .gift-category { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; }
         .gift-reserver { font-size: 0.75rem; color: var(--accent); font-weight: 600; margin-top: 2px; }
 
         .btn-select-gift {
             padding: 8px 14px;
-            font-size: 0.8rem;
-            border-radius: 6px;
+            font-size: 0.78rem;
+            border-radius: 20px;
             border: none;
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
             background-color: var(--accent);
             color: white;
-            transition: background 0.2s;
             flex-shrink: 0;
         }
 
         .btn-select-gift:hover { background-color: var(--accent-hover); }
-        .btn-select-gift.reserved { background-color: #8c8c8c; cursor: default; }
+        .btn-select-gift.reserved { background-color: #a89f91; cursor: default; }
 
+        /* PIX */
         .pix-box {
             background: var(--primary-light);
-            border: 1px dashed var(--primary);
-            padding: 16px;
-            border-radius: 10px;
+            border: 1px dashed var(--border-gold);
+            padding: 18px;
+            border-radius: 14px;
             text-align: center;
             margin-top: 20px;
         }
 
-        .pix-title { font-weight: 600; font-size: 0.9rem; color: var(--primary); }
+        .pix-title { font-family: var(--font-title); font-weight: 700; font-size: 1.1rem; color: var(--primary-dark); }
 
         .pix-key {
             font-family: monospace;
             font-weight: bold;
             background: #ffffff;
-            padding: 8px;
-            border-radius: 6px;
-            margin: 8px 0;
-            font-size: 0.9rem;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.92rem;
             word-break: break-all;
             border: 1px solid var(--border-color);
+            color: var(--primary-dark);
         }
 
-        .pix-button { padding: 8px; font-size: 0.85rem; }
+        .pix-button { padding: 10px 20px; font-size: 0.82rem; }
 
         .firebase-status {
             text-align: center;
@@ -374,17 +390,18 @@
             text-align: center;
             padding: 18px 10px;
             color: #a94442;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             background: #fff5f5;
             border-radius: 10px;
         }
 
+        /* MODAL */
         .modal-overlay {
             position: fixed;
             inset: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(61, 43, 31, 0.5);
             display: none;
             align-items: center;
             justify-content: center;
@@ -395,26 +412,25 @@
         .modal-overlay.active { display: flex; }
 
         .modal-body {
-            background: #ffffff;
+            background: #fcf9f5;
             border-radius: var(--radius);
+            border: 1px solid var(--border-gold);
             padding: 24px;
             width: 100%;
             max-width: 400px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             text-align: center;
         }
 
-        .modal-body h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 10px; }
-        .modal-description { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px; }
+        .modal-body h3 { font-family: var(--font-title); color: var(--primary); font-size: 1.4rem; margin-bottom: 8px; }
+        .modal-description { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
         .modal-actions { display: flex; gap: 10px; }
 
         @media (max-width: 420px) {
-            body { padding: 12px 8px; }
-            .hero-card { padding: 30px 18px; }
-            .hero-card h1 { font-size: 1.9rem; }
-            .card { padding: 22px 16px; }
-            .gift-item { align-items: flex-start; }
-            .btn-select-gift { padding: 7px 10px; }
+            body { padding: 16px 8px; }
+            .hero-card { padding: 30px 14px; }
+            .hero-card p.hosts { font-size: 2.7rem; }
+            .card { padding: 20px 14px; }
         }
     </style>
 </head>
@@ -598,8 +614,6 @@
     };
 
 
-   
-
     /* ===== LISTA DOS PRESENTES ATUALIZADA ===== */
     const listaPresentes = [
         { id: "1",  nome: "Mesa + cadeiras", categoria: "Cozinha" },
@@ -633,7 +647,6 @@
         { id: "31", nome: "PlayStation 5", categoria: "Mimos" },
         { id: "32", nome: "Contribuição para a viagem ao Rio de Janeiro — R$ 500,00", categoria: "Mimos" },
         { id: "33", nome: "R$ 100,00 para o psicólogo para aguentar o Dhouglas 😂", categoria: "Mimos" },
-        // NOVOS ITENS ADICIONADOS:
         { id: "34", nome: "Tábua de corte", categoria: "Cozinha" },
         { id: "35", nome: "Pote de vidro", categoria: "Cozinha" },
         { id: "36", nome: "Pano de prato", categoria: "Cozinha" },
@@ -671,16 +684,13 @@
     }
 
 
-    /* ===== CRIAR / SINCRONIZAR OS 33 PRESENTES ===== */
-
-    /* ===== CRIAR / SINCRONIZAR / LIMPAR PRESENTES ===== */
+    /* ===== SINCRONIZAR PRESENTES ===== */
     async function sincronizarPresentesComFirebase() {
         try {
             console.log("🔄 Sincronizando presentes com o Firestore...");
 
             const batch = writeBatch(db);
 
-            // 1. Atualiza/Adiciona todos os presentes da lista (incluindo os novos)
             listaPresentes.forEach((presente) => {
                 const presenteRef = doc(db, "presentes", presente.id);
                 batch.set(
@@ -690,7 +700,6 @@
                 );
             });
 
-            // 2. Garante a remoção do Fogão (ID 22) e Geladeira (ID 23)
             const idsParaRemover = ["22", "23"];
             idsParaRemover.forEach((id) => {
                 const presenteRef = doc(db, "presentes", id);
@@ -701,7 +710,6 @@
             console.log("✅ Banco de dados atualizado com os novos presentes!");
         } catch (erro) {
             console.error("❌ Erro ao sincronizar presentes:", erro);
-            throw erro;
         }
     }
 
@@ -736,8 +744,6 @@
 
                     return a.nome.localeCompare(b.nome, "pt-BR");
                 });
-
-                console.log("🎁 Presentes recebidos do Firebase:", presentes);
 
                 if (firebaseStatus) {
                     const disponiveis = presentes.filter(item => !item.reservado).length;
@@ -1252,9 +1258,9 @@
     }
 
 
-    /* ===== INICIALIZAÇÃO ===== */
+    /* ===== INICIALIZAÇÃO SEGURA ===== */
 
-    document.addEventListener("DOMContentLoaded", async function () {
+    document.addEventListener("DOMContentLoaded", function () {
         try {
             const pixElement = document.getElementById("chavePixText");
 
@@ -1265,25 +1271,22 @@
             iniciarTimer();
 
             if (firebaseStatus) {
-                firebaseStatus.textContent = "Criando lista de presentes...";
+                firebaseStatus.textContent = "Conectando à lista de presentes...";
             }
 
-            await sincronizarPresentesComFirebase();
+            // A sincronização roda em segundo plano sem travar o carregamento da tela
+            sincronizarPresentesComFirebase();
 
+            // Carrega os presentes do banco de dados em tempo real
             carregarPresentesFirebase();
 
-            console.log("✅ Convite inicializado.");
-            console.log("✅ Firebase conectado.");
-            console.log("✅ 33 presentes sincronizados.");
+            console.log("✅ Convite inicializado com sucesso.");
 
         } catch (erro) {
             console.error("❌ Erro durante a inicialização:", erro);
 
             if (firebaseStatus) {
-                firebaseStatus.textContent =
-                    "Erro ao inicializar o sistema: " +
-                    (erro.message || "verifique o Firestore.");
-
+                firebaseStatus.textContent = "Erro ao inicializar o sistema.";
                 firebaseStatus.style.color = "#a94442";
             }
         }
