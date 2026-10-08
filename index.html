@@ -803,7 +803,7 @@
         itensFiltrados.forEach((item) => {
             const li = document.createElement("li");
 
-            // Identifica se é um mimo reutilizável/coletivo (IDs 32 e 33)
+            // Identifica se é um mimo coletivo (Viagem ou Psicólogo: IDs 32 e 33)
             const ehMimoColetivo = (item.id === "32" || item.id === "33");
 
             li.className = "gift-item" + (item.reservado && !ehMimoColetivo ? " reserved" : "");
@@ -959,13 +959,20 @@
                 }
 
                 transaction.update(presenteRef, { 
-                    reservado: !ehMimoColetivo, // Mimos coletivos continuam disponíveis para novos cliques
+                    reservado: !ehMimoColetivo, // Continua disponível para novas pessoas clicarem
                     por: novoPor 
                 });
             });
 
             fecharModal();
-            alert("🎁 Contribuição registrada com sucesso! Muito obrigado pelo carinho!");
+
+            // COPIAR CHAVE PIX AUTOMATICAMENTE SE FOR MIMO COLETIVO
+            if (ehMimoColetivo) {
+                await copiarPixSilencioso();
+                alert("🎁 Contribuição registrada com sucesso!\n\n📋 A chave PIX foi copiada para a sua área de transferência para facilitar a transferência. Muito obrigado pelo carinho!");
+            } else {
+                alert("🎁 Presente reservado com sucesso!");
+            }
 
         } catch (erro) {
             console.error("Erro ao reservar presente:", erro);
@@ -1161,41 +1168,35 @@
     }
 
 
-    /* ===== COPIAR PIX ===== */
+    /* ===== COPIAR PIX SILENCIOSO ===== */
 
-    async function copiarPix() {
+    async function copiarPixSilencioso() {
         const chave = CONFIG.chavePix;
-
         try {
             if (navigator.clipboard && window.isSecureContext) {
                 await navigator.clipboard.writeText(chave);
             } else {
                 const textarea = document.createElement("textarea");
-
                 textarea.value = chave;
                 textarea.style.position = "fixed";
                 textarea.style.opacity = "0";
-
                 document.body.appendChild(textarea);
-
                 textarea.focus();
                 textarea.select();
-
                 document.execCommand("copy");
-
                 textarea.remove();
             }
-
-            alert("Chave PIX copiada com sucesso!");
-
-        } catch (erro) {
-            console.error("Erro ao copiar PIX:", erro);
-
-            alert(
-                "Não foi possível copiar automaticamente.\n\n" +
-                "Copie manualmente:\n" + chave
-            );
+        } catch (e) {
+            console.error("Erro ao copiar PIX automaticamente:", e);
         }
+    }
+
+
+    /* ===== COPIAR PIX ===== */
+
+    async function copiarPix() {
+        await copiarPixSilencioso();
+        alert("Chave PIX copiada com sucesso!");
     }
 
 
