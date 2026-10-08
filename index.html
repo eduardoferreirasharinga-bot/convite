@@ -479,7 +479,7 @@
                 <i class="fa-solid fa-house"></i>
                 <div>
                     <strong>Endereço</strong>
-                    <span>Chacara Diamante, 1830 - Bairro Jardim São Paulo, Rio Claro - SP</span>
+                    <span>Será disponibilizado em breve 🏡</span>
                 </div>
             </div>
         </div>
@@ -608,7 +608,7 @@
 
     const CONFIG = {
         telefoneWhatsApp: "5519971596789",
-        linkGoogleMaps: "https://www.google.com/maps/dir//Ch%C3%A1cara+Diamante+Rio+Claro,+R.+22,+1830+-+Jardim+Sao+Paulo,+Rio+Claro+-+SP,+13503-007/@-22.4231424,-47.5922432,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x94c7db111f172bab:0xea52a1402041db28!2m2!1d-47.5778484!2d-22.4083841?entry=ttu",
+        linkGoogleMaps: "", // Deixado vazio até o endereço ser definido
         chavePix: "19997633570",
         dataEvento: "2026-10-24T13:00:00-03:00"
     };
@@ -1164,6 +1164,10 @@
     /* ===== GOOGLE MAPS ===== */
 
     function abrirMapa() {
+        if (!CONFIG.linkGoogleMaps) {
+            alert("📍 O endereço exato e a localização no mapa serão divulgados em breve!");
+            return;
+        }
         window.open(CONFIG.linkGoogleMaps, "_blank", "noopener,noreferrer");
     }
 
