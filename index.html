@@ -803,33 +803,44 @@
         itensFiltrados.forEach((item) => {
             const li = document.createElement("li");
 
-            li.className = "gift-item" + (item.reservado ? " reserved" : "");
+            // Identifica se é um mimo reutilizável/coletivo (IDs 32 e 33)
+            const ehMimoColetivo = (item.id === "32" || item.id === "33");
+
+            li.className = "gift-item" + (item.reservado && !ehMimoColetivo ? " reserved" : "");
 
             const nome = escaparHTML(item.nome);
             const categoria = escaparHTML(item.categoria);
             const reservadoPor = escaparHTML(item.por);
 
+            let statusTextoHtml = "";
+            if (ehMimoColetivo) {
+                if (reservadoPor) {
+                    statusTextoHtml = `<span class="gift-reserver">
+                        <i class="fa-solid fa-heart"></i>
+                        Já ajudaram: ${reservadoPor}
+                    </span>`;
+                }
+            } else if (item.reservado) {
+                statusTextoHtml = `<span class="gift-reserver">
+                    <i class="fa-solid fa-check"></i>
+                    Reservado por ${reservadoPor || "outra pessoa"}
+                </span>`;
+            }
+
             li.innerHTML = `
                 <div class="gift-details">
                     <span class="gift-title">${nome}</span>
                     <span class="gift-category">${categoria}</span>
-                    ${
-                        item.reservado
-                            ? `<span class="gift-reserver">
-                                   <i class="fa-solid fa-check"></i>
-                                   Reservado por ${reservadoPor || "outra pessoa"}
-                               </span>`
-                            : ""
-                    }
+                    ${statusTextoHtml}
                 </div>
 
                 <button
-                    class="btn-select-gift ${item.reservado ? "reserved" : ""}"
+                    class="btn-select-gift ${item.reservado && !ehMimoColetivo ? "reserved" : ""}"
                     type="button"
                     data-id="${escaparHTML(item.id)}"
-                    ${item.reservado ? "disabled" : ""}
+                    ${item.reservado && !ehMimoColetivo ? "disabled" : ""}
                 >
-                    ${item.reservado ? "Reservado" : "Escolher"}
+                    ${ehMimoColetivo ? "Contribuir" : (item.reservado ? "Reservado" : "Escolher")}
                 </button>
             `;
 
@@ -863,7 +874,9 @@
             return;
         }
 
-        if (item.reservado) {
+        const ehMimoColetivo = (item.id === "32" || item.id === "33");
+
+        if (item.reservado && !ehMimoColetivo) {
             alert(`Este presente já foi reservado por ${item.por || "outra pessoa"}.`);
             return;
         }
@@ -876,7 +889,7 @@
 
         if (!titulo || !input || !modal) return;
 
-        titulo.textContent = `Reservar: ${item.nome}`;
+        titulo.textContent = ehMimoColetivo ? `Contribuir com: ${item.nome}` : `Reservar: ${item.nome}`;
         input.value = "";
         modal.classList.add("active");
 
@@ -924,6 +937,7 @@
 
         try {
             const presenteRef = doc(db, "presentes", id);
+            const ehMimoColetivo = (id === "32" || id === "33");
 
             await runTransaction(db, async (transaction) => {
                 const snapshot = await transaction.get(presenteRef);
@@ -934,15 +948,24 @@
 
                 const dados = snapshot.data();
 
-                if (dados.reservado === true) {
+                if (dados.reservado === true && !ehMimoColetivo) {
                     throw new Error("PRESENTE_JA_RESERVADO");
                 }
 
-                transaction.update(presenteRef, { reservado: true, por: nome });
+                // Se for mimo coletivo, vai acumulando os nomes de quem ajudou
+                let novoPor = nome;
+                if (ehMimoColetivo && dados.por) {
+                    novoPor = `${dados.por}, ${nome}`;
+                }
+
+                transaction.update(presenteRef, { 
+                    reservado: !ehMimoColetivo, // Mimos coletivos continuam disponíveis para novos cliques
+                    por: novoPor 
+                });
             });
 
             fecharModal();
-            alert("🎁 Presente reservado com sucesso!");
+            alert("🎁 Contribuição registrada com sucesso! Muito obrigado pelo carinho!");
 
         } catch (erro) {
             console.error("Erro ao reservar presente:", erro);
@@ -953,7 +976,7 @@
                 alert("Esse presente não existe mais no Firebase.");
             } else {
                 alert(
-                    "Não foi possível reservar o presente.\n\n" +
+                    "Não foi possível registrar.\n\n" +
                     "Erro: " + (erro.message || "Erro desconhecido.")
                 );
             }
@@ -1274,10 +1297,8 @@
                 firebaseStatus.textContent = "Conectando à lista de presentes...";
             }
 
-            // A sincronização roda em segundo plano sem travar o carregamento da tela
             sincronizarPresentesComFirebase();
 
-            // Carrega os presentes do banco de dados em tempo real
             carregarPresentesFirebase();
 
             console.log("✅ Convite inicializado com sucesso.");
