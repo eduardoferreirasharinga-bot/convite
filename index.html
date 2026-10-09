@@ -274,6 +274,25 @@
             border-color: var(--accent);
         }
 
+        /* CAIXA DE OBSERVAÇÃO DE CORES */
+        .color-notice {
+            background-color: var(--primary-light);
+            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+        }
+
+        .color-notice strong {
+            display: block;
+            font-size: 0.88rem;
+            margin-bottom: 2px;
+            color: var(--primary-dark);
+        }
+
         /* ABAS */
         .filter-tabs {
             display: flex;
@@ -528,6 +547,12 @@
             <h2>Lista de Presentes</h2>
         </div>
 
+        <!-- OBSERVAÇÃO DE CORES DOS PRESENTES -->
+        <div class="color-notice">
+            <strong><i class="fa-solid fa-palette"></i> Preferência de Cores:</strong>
+            Para manter nossa cozinha e casa combinando, preferimos itens nas cores <b>Preto, Bege ou Bambu/Madeira</b>. 🤎
+        </div>
+
         <div class="filter-tabs">
             <button class="tab-btn active" type="button" data-categoria="todos">Todos</button>
             <button class="tab-btn" type="button" data-categoria="Cozinha">Cozinha</button>
@@ -654,7 +679,27 @@
         { id: "38", nome: "Airfryer", categoria: "Cozinha" },
         { id: "39", nome: "Aspirador de pó", categoria: "Mimos" },
         { id: "40", nome: "Boleira", categoria: "Cozinha" },
-       /* { id: "41", nome: "Jogo de Xícaras", categoria: "Cozinha" }*/
+        
+        /* ===== NOVOS ITENS ADICIONADOS ===== */
+        { id: "41", nome: "Batedeira", categoria: "Cozinha" },
+        { id: "42", nome: "Cafeteira elétrica", categoria: "Cozinha" },
+        { id: "43", nome: "Travessas de vidro", categoria: "Cozinha" },
+        { id: "44", nome: "Mixer", categoria: "Cozinha" },
+        { id: "45", nome: "Mini processador de alimentos", categoria: "Cozinha" },
+        { id: "46", nome: "Sanduicheira", categoria: "Cozinha" },
+        { id: "47", nome: "Panela elétrica de pressão", categoria: "Cozinha" },
+        { id: "48", nome: "Organizadores de geladeira", categoria: "Cozinha" },
+        { id: "49", nome: "Petisqueira", categoria: "Cozinha" },
+        { id: "50", nome: "Fondue de cerâmica", categoria: "Cozinha" },
+        { id: "51", nome: "Taças de vidro", categoria: "Cozinha" },
+        { id: "52", nome: "Descanso de panela", categoria: "Cozinha" },
+        { id: "53", nome: "Jogo americano de mesa posta", categoria: "Cozinha" },
+        { id: "54", nome: "Caixas organizadoras", categoria: "Mimos" },
+        { id: "55", nome: "Espremedor de laranja", categoria: "Cozinha" },
+        { id: "56", nome: "Jogo de facas", categoria: "Cozinha" },
+        { id: "57", nome: "Forno elétrico", categoria: "Cozinha" },
+        { id: "58", nome: "Galheteiro", categoria: "Cozinha" },
+        { id: "59", nome: "Frigideira", categoria: "Cozinha" }
     ];
 
 
